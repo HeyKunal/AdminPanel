@@ -30,9 +30,9 @@ except:
 	print ('\033[1;31m[-]\033[1;m -u argument is not supplied. Enter python breacher -h for help')
 	quit()
 
-target = target.replace('http://', '') #and http:// from the url
+target = target.replace('https://', '') #and https:// from the url
 target = target.replace('/', '') #removes / from url so we can have example.com and not example.com/
-target = 'http://' + target #adds http:// before url so we have a perfect URL now
+target = 'https://' + target #adds https:// before url so we have a perfect URL now
 if args.prefix != None:
 	target = target + args.prefix
 try:
@@ -50,12 +50,12 @@ def scan(links):
 	for link in links: #fetches one link from the links list
 		link = target + link # Does this--> example.com/admin/
 		r = requests.get(link) #Requests to the combined url
-		http = r.status_code #Fetches the http response code
-		if http == 200: #if its 200 the url points to valid resource i.e. admin panel
+		https = r.status_code #Fetches the http response code
+		if https == 200: #if its 200 the url points to valid resource i.e. admin panel
 			print ('  \033[1;32m[+]\033[0m Admin panel found: %s'% link)
-		elif http == 404: #404 means not found
+		elif https == 404: #404 means not found
 			print ('  \033[1;31m[-]\033[1;m %s'% link)
-		elif http == 302: #302 means redirection
+		elif https == 302: #302 means redirection
 			print ('  \033[1;32m[+]\033[0m Potential EAR vulnerability found : ' + link)
 		else:
 			print ('  \033[1;31m[-]\033[1;m %s'% link)
